@@ -6,3 +6,4 @@ lualatex diploma
 lualatex diploma
 Pop-Location
 xcopy build\diploma.pdf . /Y
+Start-Process ((Resolve-Path "diploma.pdf").Path)
