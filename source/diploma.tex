@@ -33,6 +33,9 @@
 \let\oldcite=\cite
 \renewcommand\cite[1]{\ifthenelse{\equal{#1}{NEEDED}}{\ensuremath{^\texttt{[citation~needed]}}}{\oldcite{#1}}}
 
+\usepackage{wrapfig}
+\usepackage{float}
+
 %--------------------------------------------------------------------------------------
 % Main variables
 %--------------------------------------------------------------------------------------
@@ -41,6 +44,7 @@
 \newcommand{\vikcim}{Feladatellenőrző rendszer továbbfejlesztése}
 \newcommand{\viktanszek}{Irányítástechnika és Informatika Tanszék}
 \newcommand{\vikdoktipus}{Szakdolgozat}
+\graphicspath{{./figures/}}
 
 %--------------------------------------------------------------------------------------
 % Page layout setup
@@ -175,7 +179,7 @@ aboveskip=10pt}
 %\printglossary[title=Rövidítések jegyzéke]
 
 \bibliography{bibliography}\addcontentsline{toc}{chapter}{Irodalomjegyzék}
-\bibliographystyle{unsrt} % huplain
+\bibliographystyle{huplain}
 
 \label{page:last}
 \end{document}
