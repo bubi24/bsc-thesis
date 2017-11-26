@@ -1,12 +1,10 @@
 %----------------------------------------------------------------------------
-\chapter{Hallgatók értékelései}\label{chapter:assessments}
+\chapter{Hallgatói értékelési rendszer}\label{chapter:assessments}
 %----------------------------------------------------------------------------
 
-\section{Értékelési rendszer (2-3 oldal)}
+A korábban leírtaknak megfelelően a JPorta tárgyaiban lehetőség van különböző értékeléseket felvenni, majd azokat kurzusokhoz rendelni. Ezeket hozzárendelés után a kurzus oktatói tudják értékelni (\ref{fig:jporta_course_results}. ábra).
 
-A korábban leírtaknak megfelelően a JPorta tárgyaiban lehetőség van különböző értékeléseket felvenni, majd azokat kurzusokhoz rendelni. Ezeket később a kurzus oktatói fogják értékelni.
-
-Új értékelést csak a tárgy adminisztrátorai tudnak létrehozni és kurzusokhoz rendelni. Minden értékeléshez az alábbi tulajdonságok tartoznak:
+Új értékelést csak a tárgy adminisztrátorai tudnak létrehozni és kurzusokhoz rendelni. Az ehhez tartozó felület \aref{fig:jporta_add_result}. ábrán látható. Minden értékeléshez az alábbi tulajdonságok tartoznak:
 \begin{itemize}
     \item Név: rövid név, mely azonosítja az értékelést, pl. ZH 1
     \item Típus: előre definiált értékek, melyekhez tartozik egy reguláris kifejezés \cite{RegExp}. Csak olyan értéket vehet fel, ami illeszkedik a hozzá tartozó kifejezésre.
@@ -33,20 +31,20 @@ Az univerzalitás egyedüli határa a megfelelő típus megtalálása az érték
 
 \begin{figure}[p]
     \centering
-    \resizebox{\textwidth}{!}{
+    \resizebox{0.9\textwidth}{!}{
         \includegraphics[]{jporta_add_result.png}
     }
     \caption{Értékelés típus hozzáadása}
     \label{fig:jporta_add_result}
 \end{figure}
 
-\section{Dinamikus mezők (3-5 oldal)}\label{section:dynamic-assessments}
+\section{Dinamikus értékelések}\label{section:dynamic-assessments}
 
 Az értékelések létrehozásánál hamar felmerült az igény a dinamikus, azaz automatikusan számolódó mezők használtára. Ezek nagyban megkönnyítik a félév végi összesítést és a végső jegy meghatározását. Viszont ahhoz, hogy ezt széleskörűen lehessen használni egy teljesen általános rendszert kellett fejleszteni, hiszen minden tárgynak eltérő, akár félévről félévre változó követelményei lehetnek, melyekhez más és más számolásokat, súlyozásokat kellhet végezni. 
 
 Ennek megoldására a jelengi implementáció előtt is volt mód, ám az fapadosnak számított. Először az oktatóknak exportálni kellett a meglévő eredményeket egy Excel fájlba, majd ezt a fájlt külső programmal szerkesztve kellett létrehozniuk a dinamikus mezők értékeit. Csak ezután tölthették fel a portálra a bővített fájlt, melynek feldolgozása során a JPorta az ebben található értékeket frissítette. Ezt a módszert Kálmán Viktor cserélte le a jelenlegi alternatívára \cite{KalmanMsc}.
 
-\subsection{Belső működés}
+\section{Dinamikus értékelések jelenlegi implementációja}
 Az aktuális megvalósításnak két fő követelményt támasztottak: webes felületen beállíthatónak és az oktatók számára könnyen testreszabhatónak kellett lennie.
 
 Ezek teljesítése érdekében a dinamikus mezők kiszámolására Python nyelven írt kódokat használ a portál. Minden dinamikus mezőhöz webes felületen módosítható kód tartozik, amely megkapja a hallgatókhoz tartozó adatokat, majd ez alapján kiszámolja a mező értékét. A megadott Python kódnak tartalmaznia kell egy \textit{calculate\_result} függvényt, mely három szótár (dictionary) típusú paraméterrel rendelkezik:
@@ -66,7 +64,7 @@ Ezek teljesítése érdekében a dinamikus mezők kiszámolására Python nyelve
 
 Ez a függvény minden hallgatóra egyesével fog meghívódni, visszatérési értéke pedig megadja a mező értékét az adott hallgatónál.
 
-Az alábbi példa kód a Programozás alapjai 3. tárgynál használt egyik dinamikus mezőhöz tartozik, feladata a félév végi jegy kiszámítása. Itt a félév során megírt 6 db zárthelyi dolgozatból a legjobb 4 átlagát kell venni, majd kerekíteni 2 tizedesjegyre. A további kerekítést a laborvezető oktatók végzik.
+Az alábbi példa kód a Programozás alapjai 3. tárgynál használt egyik dinamikus mezőhöz tartozik, feladata a félév végi átlag kiszámítása. Itt a félév során megírt 6 db zárthelyi dolgozatból a legjobb 4 átlagát kell venni, majd kerekíteni 2 tizedesjegyre. A további kerekítést a laborvezető oktatók végzik.
 
 \begin{lstlisting}
 def calculate_result(atds, asms, asgs):
@@ -78,8 +76,8 @@ def calculate_result(atds, asms, asgs):
 
 Természetesen a kötelező \textit{calculate\_result} függvény mellett tetszőleges számban használhatunk segédfüggvényeket is a számolás átláthatósága és egyszerűsítése érdekében.
 
-\subsection{Tesztelés}
-Az így elkészített dinamikus mezőben előfordulhatnak apró programozói hibák, emiatt a kód felhasználása előtt elengedhetetlen annak átfogó tesztelése. Szerencsére a korábban elkészült rendszer ezt is támogatja. \Aref{fig:jporta_dynamic_test}. ábrán látható módon meg tuduk adni teszt bemeneti paramétereket, majd a rendszer (az eredeti kiértékeléssel megegyező módon) kiszámolja a dinamikus mezőhöz tartozó értéket, így meggyőződhetünk a helyes működéséről.
+\section{Dinamikus értékelések tesztelése}
+Az így elkészített dinamikus mezőben könnyen előfordulhatnak programozói hibák, emiatt a kód felhasználása előtt elengedhetetlen annak átfogó tesztelése. Szerencsére a korábban elkészült rendszer ezt is támogatja. \Aref{fig:jporta_dynamic_test}. ábrán látható módon meg tuduk adni teszt bemeneti paramétereket, majd a rendszer (az eredeti kiértékeléssel megegyező módon) kiszámolja a dinamikus mezőhöz tartozó értéket, így meggyőződhetünk a helyes működéséről.
 
 \begin{figure}[h]
     \centering
@@ -90,8 +88,8 @@ Az így elkészített dinamikus mezőben előfordulhatnak apró programozói hib
     \label{fig:jporta_dynamic_test}
 \end{figure}
 
-Az értékek mellett láthatjuk a programunk kimeneteit és visszatérési értékét is. Ezeket akár a teszteléshez is felhasználhatjuk, azonban élesítés előtt célszerű ezeket törölni, mivel minden éles futásról tárolja a portál az ilyen jellegű adatokat az ellenőrizhetőség miatt.
+Az értékek mellett láthatjuk a programunk kimeneteit és visszatérési értékét is. Ezeket akár a teszteléshez is felhasználhatjuk, azonban élesítés előtt célszerű ezeket törölni, mivel a portál minden éles futásról tárolja az ilyen jellegű adatokat az ellenőrizhetőség miatt.
 
 Ugyan a példában nem volt szükség sem a jelenlétekre, se az automatikusan kiértékelődő feladatok eredményére, ezeket a számonkérésekhez hasonlóan fel tudjuk használni, illetve a tesztelés is az előzőekkel megegyezően működik.
 
-\subsection{Egymásra hivatkozása}
+\section{Dinamikus mezők dinamikus függőségei}
