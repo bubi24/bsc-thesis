@@ -93,3 +93,13 @@ Az értékek mellett láthatjuk a programunk kimeneteit és visszatérési ért�
 Ugyan a példában nem volt szükség sem a jelenlétekre, se az automatikusan kiértékelődő feladatok eredményére, ezeket a számonkérésekhez hasonlóan fel tudjuk használni, illetve a tesztelés is az előzőekkel megegyezően működik.
 
 \section{Dinamikus mezők dinamikus függőségei}
+Ez a rendszer az alapvető igényeket ugyan kielégíti, de hamar felmerült két fő hiányossága:
+
+\begin{itemize}
+    \item Dinamikus mezők kiszámítására nem használhatunk más dinamikus mezőket. 
+    \item Jelenleg nem lehet egy hallgatóra vagy kurzusra újraszámolni a dinamikus mezők értékeit, hanem mindig a tárgy összes hallgatójára újra kiértékelésre kerülnek ezek. Kezdetben ez nem tűnt nagy pazarlásnak, mivel 10-20 másodpercnél többet nem vesz igénybe a művelet egy 400 fős tárgy esetében \cite{KalmanMsc}, azonban felhasználva az előző pont miatt szükséges módosításokat, már sokkal közelebb kerülünk ennek a pontnak a megoldására is.
+\end{itemize}
+
+Az első hiányosság miatt, ha egy tárgy esetében szeretnénk, hogy a hallgatók láthassák külön a zártyhelyi dolgozataik átlagát, majd ezen érték és más mezők alapján egy másik mezőt is hozzá szeretnénk adni, akkor ezt csak kódduplikációval tehetjük meg. Azaz mindkét mezőnél meg kell adnunk ugyan azt a Python kód részletet, illetve a második mezőnél ezt még ki kell egészítenünk. Ez számos problémát felvet: a kód nem újrahasználható, módosítások hibalehetőséget rejtenek, illetve akár inkonzisztens értékeket is előállítatunk, ha a kódokat nem sikerül szinkronban tartani.
+
+A szakdolgozatom keretében erre a problémára is megterveztem és implementáltam egy elvárásoknak megfelelő megoldást. 
