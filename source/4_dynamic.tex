@@ -44,7 +44,7 @@ Az értékelések létrehozásánál hamar felmerült az igény a dinamikus, aza
 
 Ennek megoldására a jelengi implementáció előtt is volt mód, ám az fapadosnak számított. Először az oktatóknak exportálni kellett a meglévő eredményeket egy Excel fájlba, majd ezt a fájlt külső programmal szerkesztve kellett létrehozniuk a dinamikus mezők értékeit. Csak ezután tölthették fel a portálra a bővített fájlt, melynek feldolgozása során a JPorta az ebben található értékeket frissítette. Ezt a módszert Kálmán Viktor cserélte le a jelenlegi alternatívára \cite{KalmanMsc}.
 
-\section{Dinamikus értékelések jelenlegi implementációja}
+\section{Dinamikus értékelések jelenlegi implementációja}\label{section:dynamic-assessments-impl}
 Az aktuális megvalósításnak két fő követelményt támasztottak: webes felületen beállíthatónak és az oktatók számára könnyen testreszabhatónak kellett lennie.
 
 Ezek teljesítése érdekében a dinamikus mezők kiszámolására Python nyelven írt kódokat használ a portál. Minden dinamikus mezőhöz webes felületen módosítható kód tartozik, amely megkapja a hallgatókhoz tartozó adatokat, majd ez alapján kiszámolja a mező értékét. A megadott Python kódnak tartalmaznia kell egy \textit{calculate\_result} függvényt, mely három szótár (dictionary) típusú paraméterrel rendelkezik:
@@ -102,4 +102,51 @@ Ez a rendszer az alapvető igényeket ugyan kielégíti, de hamar felmerült ké
 
 Az első hiányosság miatt, ha egy tárgy esetében szeretnénk, hogy a hallgatók láthassák külön a zártyhelyi dolgozataik átlagát, majd ezen érték és más mezők alapján egy másik mezőt is hozzá szeretnénk adni, akkor ezt csak kódduplikációval tehetjük meg. Azaz mindkét mezőnél meg kell adnunk ugyan azt a Python kód részletet, illetve a második mezőnél ezt még ki kell egészítenünk. Ez számos problémát felvet: a kód nem újrahasználható, módosítások hibalehetőséget rejtenek, illetve akár inkonzisztens értékeket is előállítatunk, ha a kódokat nem sikerül szinkronban tartani.
 
-A szakdolgozatom keretében erre a problémára is megterveztem és implementáltam egy elvárásoknak megfelelő megoldást. 
+A szakdolgozatom keretében erre a problémára is kerestem a megfelelő megoldást, melyet két kulcsfontosságú részre bontottam: függőségek meghatározása, majd ezek alapján a függőségi gráf kiértékelése.
+
+A függőségek meghatározására több módszert is megvizsgáltam. Végül amellett döntöttem, hogy a felhasználóknak kell megadniuk, mely dinamikus mezőket szeretnék használni (ld. \ref{fig:jporta_dynamic_dependencies}. ábra). Ennek előnye, hogy egyszerű meghatázorni a függőségeket (hiszen a felhasználó explicit megadja azokat), hátránya pedig, hogy külön beállítást igényel. Az automatikus függőség felismeréshez szükséges lett volna a mezőhöz tartozó Python kód elemzése, mely értékéhez mérten aránytalanul sok időráfordítást követelt. Emiatt döntöttem a másik megoldás mellett. Ezen információk birtokában pedig bármelyik értékeléshez előállítható a teljes függőségi gráf egy egyszerű rekurzív bejárással.
+
+\begin{figure}[h]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \includegraphics[]{jporta_dynamic_dependencies.png}
+    }
+    \caption{Dinamikus értékelés függőségkezelés}
+    \label{fig:jporta_dynamic_dependencies}
+\end{figure}
+
+Minden függőségnek jelölt mezőt a többi értékeléssel együtt lehet felhasználni, \aref{section:dynamic-assessments-impl}. pontban leírt módon. Így nem kellett módosítani a jelenlegi függvény paraméter listát, illetve a logikailag összetartozó részek hasonlóan érhetőek el.
+
+Külön figyelmet kellett fordítani a körkörös függőségek felderítésére, mivel ezek kiértékele végtelen ciklust eredményezne. Annak érdekében, hogy az adatbázisba ne kerülhessen körkörös függőség, ezt még a mentés előtt ellenőrzöm. Megvizsgálom, hogy a megjelölt függőségek közül van-e olyan, ami az aktuálisan módosított példánytól függ. Ha létezik ilyen, akkor ez egy körkörös függőség.
+
+A másik rész a függőségi gráf kiértékelése volt. Dinamikus függőségek nélkül a sorrend nem befolyásolja a végeredményt, azonban ezen megkötések mellett már nem minden sorrend fog helyes eredményt adni. 
+
+\Aref{fig:dependency_graph}. ábrán láthatunk egy példa függőségi gráfot, ahol 
+\begin{itemize}
+    \item $a \rightarrow b$ jelenti $a$-nak $b$-től való függőségét,
+    \item a folytonos elipszis jelenti, hogy az adott dinamikus értékelés kurzushoz van rendelve, azaz kötelező kiszámolnunk az értékét,
+    \item a szaggatott elipszis jelenti, hogy az értékelés nincs kurzushoz rendelve, azaz az értékét nem kötelező kiszámolni, ha más nem hivatkozik rá.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \resizebox{0.8\textwidth}{!}{
+        \includegraphics[]{dependency_graph.png}
+    }
+    \caption{Függőségi gráf}
+    \label{fig:dependency_graph}
+\end{figure}
+
+Mivel a függőségek kialakításánál csak az irányított körmentesség a feltétel, kialakulhatnak különböző összefüggő komponensek és izolált pontok. Ezek közül csak azokat akarjuk kiértékelni, melyekre valóban szükség is van, azaz vagy hozzá van rendelve kurzushoz, vagy valamelyik kurzushoz rendelt mező (közvetlen vagy közvetett) függősége.
+
+Ezek értelmében pl. az $a, b, c, d, x$ kiértékelési sorrend megfelelő eredményt ad, mivel minden elem kiértékelésekor azok függőségeit már kiértékeltük és pontosan azokat a mezőket vettük bele a sorrendbe, amelyekre szükségünk van.
+
+A sorrend előállításához először felépítettem egy függőségi gráfot minden olyan elemből kiindulva, mely kurzushoz van rendelve. Minden így megtalált függőséget hozzáadtam a gárfhoz és rekurzívan megvizsgáltam az ahhoz tartozó függőségeket, ha az még nem létezett a gárfban. Ennek eredményeként előállt a függőségi gráf, mely pontosan a szükséges elemeket tartalmazta.
+
+Ez alapján a sorrend felállításához felhasználtam Dudás Ádám a JPorta más részein is használt ütezemőjét \cite{DudiMsc}. Ez a megoldás egy függőségi gráf alapján képes megtalálni egy megfelelő sorrendet, sőt a párhuzamosítási lehetőségeket is, de ez utóbbit nem használtam ki.
+
+Ezen kiegészítésekkel elkészült a követelményeknek megfelelő kiegészítés. Továbbfejlesztési lehetőség lehet, hogy a dinamikus függőségek mellett, minden más függőséget is számon tartsunk. Ezzel minimalizálni lehetne az adatok változása miatt újraszámolandó mezőket, illetve mindig naprakészen lehetne őket tartani.
+
+Emellett segíteni lehetne az oktatók munkáját azzal, ha lennének előre elkészített dinamikus értékelési sablonok. Ezek saját tárgyhoz rendelése után pedig további személyreszabási lehetőségeket tenne lehetővé. Ezzel a rendszer megismerésének folyamata nagyban gyorsítható lenne.
+
+Hallgatói és oktatói oldalról nézve is hiányzik, hogy a számolás alatt álló mezők a korábbi értéküket tartják meg, így inkonzisztens állapotot mutatnak. Erre az időre célszerű lenne invalidálni a korábbi értékeket és jelölni, hogy még ezek az adatok nem állnak rendelkezésre.
