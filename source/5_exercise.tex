@@ -6,21 +6,28 @@ A JPorta egyik fő funkciója a beadott feladatmegoldások automatikus kiérték
 
 Az elkészült modul blokkokat használ alapvető építő elemeinek, melyek egy-egy kiértékelési feladatot valósítanak meg. Ennek köszönhetően új igény esetén nem kell a meglévő blokkokat módosítani, csak az új funkciót megvalósító blokkot implementálni.
 
-A blokkok közötti kommunikációt bemeneti és kimeneti csatlakozóik teszik lehetővé. Ezek szabadon összeköthetőek bármely más blokk ellenkező típusú csatlakozójával, pl. a felhasználói fájl blokk kimenetét ráköthetjük a GCC fordító blokk bemenetére, így lefordíhatjuk az adott forrásfájlt (blokkok típusait lásd lentebb). Ezen kívül lehetnek olyan paraméterei is egy blokknak, melyeket adminisztrátori felületen kell beállítani, pl. fordítás esetén a fordítónak átadott kapcsolók.
+A blokkok közötti kommunikációt bemeneti és kimeneti csatlakozóik teszik lehetővé. Ezek szabadon összeköthetőek bármely más blokk ellenkező típusú csatlakozójával, pl. a felhasználói fájl blokk kimenetét ráköthetjük a GCC fordító blokk bemenetére, így lefordíhatjuk az adott forrásfájlt (rendelkezésre álló blokkok pontos leírását ld. \ref{table:blocks}). Ezen kívül lehetnek olyan paraméterei is egy blokknak, melyeket adminisztrátori felületen kell beállítani, pl. fordítás esetén a fordítónak átadott kapcsolók.
 
-Ilyen meglévő blokkok a következők:
+\begin{table}[p]
+    \begin{tabularx}{\textwidth}{X|X|X|X}
+        Blokk név 			& Leírás & Bemenetek & Kimenetek \\\hline
+        Specifikáció 		& Feladat pontos leírása & Sablon paraméterek & - \\\hline
+        Szkript 			& Egyedi paraméterek generálási módja & Alapértelmezett bemenet,\newline bemeneti fájlok, környezeti változók  & Alapértelmezett (hiba) kimenet, kimeneti fájlok \\\hline
+        Szerzői fájl 		& Feladat kiíró által feltöltött fájl & - & Fájl\\\hline
+        Felhasználói fájl 	& Hallgató által feltöltött fájl & - & Fájl \\\hline
+        GCC fordító (\ref{fig:exercise_blokk}. ábra). 		& C és C++ fordító & Archívumok, bemeneti fájlok, könyvtárak, forrásfájlok, bemeneti paraméterek & Kimeneti fájlok, futtatható állomány, alapértelmezett (hiba) kimenet \\\hline
+        Futtató 			& Program futtató & Alapértelmezett bemenet, környezeti változók, archívumok, bemeneti fájlok  & Alapértelmezett (hiba) kimenet, kimeneti fájlok \\\hline
+        Szkript ellenőrző 	& Bash/Python szkripttel a bemenet ellenőrzése & Bármely blokk kimenete & Alapértelmezett (hiba) kimenet, eredmény \\\hline
+        Szövege ellenőrző 	& Bemenet összehasonlítása konstans szöveggel & Szöveges elvárt szöveg, valódi szöveg paraméterei & Eredmény \\\hline
+        Oktatói\newline jóváhagyás 	& Oktató kézi ellenőrzés & Függőségek & Eredmény \\\hline
+        Logikai ÉS 			& Blokkok kimeneteinek és kapcsolata & Argumentumok & Eredmény \\\hline
+        Logikai VAGY 		& Blokkok kimeneteinek vagy kapcsolata & Argumentumok & Eredmény \\\hline
+    \end{tabularx}
+    \caption{Rendelkezésre álló blokkok}				
+    \label{table:blocks}
+\end{table}
 
-\begin{itemize}
-    \item Specifikáció blokk: tartalmazza a feladat leírását, akár hallgató specifikus elemekkel (pl. neptun kód, név, egyedileg generált szám, stb.). 
-    \item Szerzői fájl: a feladathoz oktatók által feltöltött fájlt tartalmazza. Szabályozható, hogy a felhasználók lássák-e ennek tartalmát. \label{authorfile}
-    \item Felhasználói fájl blokk: hallgatói megoldásként feltöltött fájl.
-    \item GCC fordító blokk: forrásfájlok fordítását végzi GCC fordítóval (\ref{fig:exercise_blokk}. ábra).
-    \item Futtató blokk: futtatható fájlokat képes futtatni, kimeneteiket továbbítani.
-    \item Szöveges ellenőrző blokk: bemenetén kapott szövegek összehasonlítását teszi lehetővé.
-    \item Szkript ellenőrző blokk: különböző szkript nyelveken írt ellenőrzést tesz lehetővé, stb.
-\end{itemize} 
-
-\begin{figure}[p]
+\begin{figure}[h]
     \centering
     \resizebox{\textwidth}{!}{
         \includegraphics[]{exercise_blokk.png}
@@ -88,6 +95,71 @@ Ezek a jogosultságok fedik le általánosságban a hozzáférések szabályozá
 Végezetül a szerzői fájlok (ld. \aref{chapter:exercise}. fejezet) hozzáférését ellenőriztem. Itt van lehetőségünk a hallgatók elől elrejteni az adott fájlt, ugyanakkor ez csak a feladatbeadásnál való listázottságát módosítja csak. A fájlok webcím alapján közvetlenül továbbra is elérhetőek maradtak, így próbálgatással az összes titkosnak hitt szerzői fájl tartarlmát le lehetett kérdezni. Ennek megoldása egyszerűnek bizonyult, csak módosítani kellett a kérést kezelő függvényben a felhasználó és a visszaadandó fájl ellenőrzését. Eddig a fájl titkos voltától függetlenül visszaadásra került a tartalom.
 
 \section{Kód lefedettség ellenőrzés}
+
+A JPorta elődje révén felmerült az igény a C++ projektek esetében a kód lefedettség ellenőrzésére is. A rendszer bővíthető felépítettsége miatt a kiegészítés a meglévő blokkok és struktúrák lényeges módosítása nélkül lehetséges. Ennek implementálása az alábbi lépéseket foglalta magában:
+
+\begin{enumerate}
+    \item Különféle lefedettség ellenőrzők vizsgálata, a megfelelő kiválasztása.
+    \item Szükséges Django modellek módosításainak tervezése és implementálása.
+    \item Feladat blokk tervezése és implementálása az adminisztrációs felületre.
+    \item Kapott nyers adatok feldolgozása.
+    \item Felhasználó (hallgató) számára megjelenítés elkészítése.
+\end{enumerate}
+
+Megvizsgáltam különböző C++ programozási nyelvet támogató kód lefedettség ellenőrző eszközöket, melyek közül a \textit{gcov} program használata mellett döntötem. Ennek kimenete kiegészíti a forráskódot azzal, hogy mely sorai hányszor kerültek futtatásra. Minden sor elején szerepel, hogy hányszor futott le. Ezt egy kettőspont követi, majd a sor száma az eredeti forrásfájlt szerint, végül pedig a hozzá tartozó kód. Ha az adott sor nem futott le a tesztesetek során, akkor az elején szám helyett \textit{\#\#\#\#\#} vagy \textit{=====} szerepel. Ennek futtatásához szükséges egyfelől a fordításkor megfelelő kapcsoló átadása, illetve a fordításkor és futtattáskor keletkezett \textit{gcno} és \textit{gcda} fájlok továbbítása a \textit{gcov} számára. Tehát a keletkezett fájl formátuma az alábbihoz hasonló:
+
+\begin{lstlisting}
+    -:    1:#include <iostream>
+    -:    2:
+#####:    3:void do_not_run_me()
+    -:    4:{
+#####:    5:    std::cout << "do_not_run_me" << std::endl;
+#####:    6:}
+    -:    7:
+    1:    8:void run_me()
+    -:    9:{	 
+    1:   10:    std::cout << "do_not_run_me" << std::endl;
+    1:   11:}
+    -:   12:	 
+    1:   13:int main()	 
+    1:   14:{	 
+    1:   15:    run_me();
+    1:   16:}
+\end{lstlisting}
+
+Az elkészült blokk bemenetei a fordítási egységenként keletkezett \textit{gcno} és \textit{gcda} fájlok és a forrásfájlok. Beállítási lehetőségként szerepel a minimálisan elfogadott lefedettségi érték, mely alatt a beadás sikertelennek bizonyul. 
+Ezután elkészítettem a szükséges adminisztrátoi felületet a blokkhoz (ld. \ref{fig:jporta_codecov_block}. ábra). Ennek bal oldali oszlopában találhatóak a bemenetek bekötésére szolgáló vezérlők (melyek más blokkok kimenetei), középen a blokk tulajdonságainak beállítása, végül jobb oldalon a kimenet definiálása, mely más blokk bemenetére köthető.
+    
+\begin{figure}[h]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \includegraphics[]{jporta_codecov_block.png}
+    }
+    \caption{Kódlefedettség ellenőrző blokk}
+    \label{fig:jporta_codecov_block}
+\end{figure} 
+
+A nyers adatok feldolgozását a modell osztály valósítja meg. Ez a szöveget a megadott formátum szerint elemzi, majd elkészíti a megjelenítéshez szükséges adatstruktúrát.
+
+Végül elkészítettem a hallgatói felületen látható grafikus megjelenítéts (ld. \ref{fig:jporta_codecov_result1}. és \ref{fig:jporta_codecov_result2}. ábra). Itt a hallgató fájlokra bontba megtekintheti, mely sorokat érintette legalább egyszer a tesztesetek során (ezek zöld háttérrel vannak jelölve), illetve azokat, amelyeket egyszer sem (ezek piros háttérrel). A nem színezett sorokban nem található végrehajtható kód. Emellett megtalálható a fájlonkénti és az összesített kódlefedettség is százalékos formában.
+
+\begin{figure}[h]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \includegraphics[]{jporta_codecov_result1.png}
+    }
+    \caption{Lefedettség ellenőrző hallgatói oldalról}
+    \label{fig:jporta_codecov_result1}
+\end{figure} 
+
+\begin{figure}[h]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \includegraphics[]{jporta_codecov_result2.png}
+    }
+    \caption{Lefedettség ellenőrző hallgatói oldalról}
+    \label{fig:jporta_codecov_result2}
+\end{figure} 
 
 \section{Feladatok (tesztek) importálása és exportálása}
 
