@@ -12,6 +12,7 @@ Ilyen meglévő blokkok a következők:
 
 \begin{itemize}
     \item Specifikáció blokk: tartalmazza a feladat leírását, akár hallgató specifikus elemekkel (pl. neptun kód, név, egyedileg generált szám, stb.). 
+    \item Szerzői fájl: a feladathoz oktatók által feltöltött fájlt tartalmazza. Szabályozható, hogy a felhasználók lássák-e ennek tartalmát. \label{authorfile}
     \item Felhasználói fájl blokk: hallgatói megoldásként feltöltött fájl.
     \item GCC fordító blokk: forrásfájlok fordítását végzi GCC fordítóval (\ref{fig:exercise_blokk}. ábra).
     \item Futtató blokk: futtatható fájlokat képes futtatni, kimeneteiket továbbítani.
@@ -57,11 +58,34 @@ Ez a megoldás kifinomultabbnak mondható az eredeti ACL technikához képest, m
 
 Az automatikus kiértékelő modulnál a jogosultság kezelés korábban nem készült el megfelelően, így ugyan hallgatói oldalról nézve minden jól működött, a feladatokat csak \textit{superuser} jogokkal rendelkező adminisztrátorok hozhatták létre. Ez pedig nagyban megnehezítette felsőbbéves hallgatók, laborvezetők bevonását a rendelkezésre álló feladatok bővítésére. Ennek oka, hogy ekkor minden más adatot is láttak volna a portálon, beleértve minden hallgató eredményeit, megoldásait, ami nem megengedhető.
 
-Ezek értelmében a jogosultság kezelés kibővítésével a cél az volt, hogy egyszerűen és biztonságosan lehessen automatikusan kiértékelődő feladatok létrehozására és szerkesztésére. Az így elkészült rendszer alkalmazza mindkét fenti hozzáférés szabályozási módszert a maximális biztonságos elérésének érdekében.
+Ezek értelmében a jogosultság kezelés kibővítésével a cél az volt, hogy egyszerűen és biztonságosan lehessen automatikusan kiértékelődő feladatok létrehozására és szerkesztésére. Az így elkészült rendszer alkalmazza mindkét fenti hozzáférés szabályozási módszert a maximális biztonság és testreszabottság elérésének érdekében.
 
-Először is módosítottam a meglévő szerkezetet úgy, hogy 
+Ennek elkészítéséhez először a Django jogosultságok ellenőrzését implementáltam, melyhez a beépített \textit{PermissionRequiredMixin} osztályt használtam. Ez egyszerűen teszi lehetővé a jogosultságok meglétének ellenőrzését, csak meg kell adnunk a szükséges jogosultság(ok) listáját, a többit pedig a keretrendszerre bízhatjuk. \cite{DjangoPermissionMixin}
 
-Author fájlok védelme
+Két jogosultságot használtam fel:
+
+\begin{itemize}
+    \item \textit{view\_exercise}: meglétével a felhasználó megtekintheti az összes eddig létrehozott automatikusan kiértékelődő feladatot (exercise). Ennek köszönhetően láthatja, ha már létezik hasonló feladat, mint amire szüksége van, illetve ötletet meríthet a többi feladatból. Emellett pedig a tanulási folyamatot is segíti, hiszen a már meglévő feladatok megértésével fény derülhet az addig rejtélyesnek tűnő működésre.
+    \item \textit{create\_exercise}: meglétével a felhasználó létrehozhat új feladatokat. Ilyenkor lehetősége van új, üres feladatot létrehozni vagy egy korábbiról másolatot készíteni.
+\end{itemize}
+
+Ezek a jogosultságok fedik le általánosságban a hozzáférések szabályozását. A konkrét feladat példányok hozzáférésének konrtollálásához az előzőek kiegészítésére operátori és tulajdonosi szintet használtam. Ha egy felhasználóhoz egyik sincs hozzárendelve, akkor csak megtekintheti az adott feladatot, nem módosíthatja annak semmilyen elemét. A felhasználói szintek beállítása \aref{fig:exercise_perms}. ábrán látható.
+
+\begin{itemize}
+    \item Operátor (operator): az adott feladat példány alap adatait (cím, leírás és címkék), meglévő blokkjait, azok összeköttetéseit tudja módosítani. Lehetősége van más operátor szintű felhasználók felvételére is, illetve egy beadott feladatra újra lefuttatni a kiértékelési folyamatot.
+    \item Tulajdonos (owner): az adott feladat példányhoz teljes jogkörrel rendelkezik. Az operátori szint jogain felül hozzáadhat, törölhet blokkokat, más személyeket tulajdonosi szintre emelhet és akár törölheti is a feladatot. Csak tulajdonosok publikálhatnak vagy vonhatnak vissza feladatokat\footnote{A feladat publikálása késznek jelöli azt, melyet csak ilyen állapotban lehet kurzushoz rendelni.}.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \includegraphics[]{exercise_perms.png}
+    }
+    \caption{Feladat példányhoz tartozó jogosultsági szintek beállítása}
+    \label{fig:exercise_perms}
+\end{figure}
+
+Végezetül a szerzői fájlok (ld. \aref{chapter:exercise}. fejezet) hozzáférését ellenőriztem. Itt van lehetőségünk a hallgatók elől elrejteni az adott fájlt, ugyanakkor ez csak a feladatbeadásnál való listázottságát módosítja csak. A fájlok webcím alapján közvetlenül továbbra is elérhetőek maradtak, így próbálgatással az összes titkosnak hitt szerzői fájl tartarlmát le lehetett kérdezni. Ennek megoldása egyszerűnek bizonyult, csak módosítani kellett a kérést kezelő függvényben a felhasználó és a visszaadandó fájl ellenőrzését. Eddig a fájl titkos voltától függetlenül visszaadásra került a tartalom.
 
 \section{Kód lefedettség ellenőrzés}
 
