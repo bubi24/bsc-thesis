@@ -4,7 +4,7 @@
 
 A BME Irányítástechnika és Informatika Tanszékén 2009 és 2015 között aktívan használták a CPorta névre keresztelt automatikus feladatkiértékelő rendszert, melyet a Közigazgatási Informatikai Központ (BME-IK) munkatársai fejlesztettek. Az idő folyamán a rendszert folyamatosan bővítették, azonban egy idő után ez egyre nehézkesebbé vált. Ennek oka a fejlesztőgárda cserélődése, a nem megfelelően átgondolt új funkciók implementálása, illetve az igények változása volt. Ezek miatt 2014-ben új portál fejlesztését kezdték meg a tanszéken \cite{KalmanMsc}.
 
- Így született meg a JPorta névre keresztelt oktatás támogató és automatikus feladatkiértékelő rendszer. A rendszer implementálása a Python programnyelv 3-as verziójával valósult meg, ezzel biztosítva a tartós támogatottságot. A webes felület generálásáért pedig a Django \cite{Django} keretrendszer 1.11.5-ös verzióját használja jelenleg, amely ezen felül felelős a belső adatmodellen végzett műveletek adatbázisműveletekre fordításáért és végrehajtásáért is. 
+ Így született meg a JPorta névre keresztelt oktatás támogató és automatikus feladatkiértékelő rendszer. A rendszer implementálása a Python programnyelv 3-as verziójával valósult meg, ezzel biztosítva a tartós támogatottságot. A webes felület generálására pedig a Django \cite{Django} keretrendszer 1.11.5-ös verzióját használja jelenleg, amely ezen felül felelős a belső adatmodellen végzett műveletek adatbázisműveletekre fordításáért és végrehajtásáért is. 
 
  \section{Alapvető felépítés}
 
@@ -43,7 +43,7 @@ A BME Irányítástechnika és Informatika Tanszékén 2009 és 2015 között ak
     A portálra belépve a hallgatókat egy összefoglaló nézet fogadja (ld. \aref{fig:jporta_home}. ábra). Itt találnak egy összefoglalót az aktuális és a már lejárt határidejű online beadandó feladataikról. Egy feladatot kiválasztva pedig lehetőségük nyílik annak beadására (ha a határidő még nem járt le) és az előző beadások részleteinek megtekintésére (ha vannak). Ilyen feladat többféle lehet, gyakran használtak az alábbiak:
 
     \begin{itemize}
-        \item Dokumentum feltöltése: tipikusan, házi feladatok specifikációihoz, dokumentációihoz tartozóan, pdf formában.
+        \item Dokumentum feltöltése: tipikusan házi feladatok specifikációihoz, dokumentációihoz tartozóan, pdf formában.
         \item Programkód feltöltése: külön állományokban, vagy zip fájlban, mely több forrásfájlt is tartalmazhat. Ezeket a rendszer lefordítja, lefuttattja és ellenőrzi a futást, ha az előbbiek sikeresek voltak.
     \end{itemize}
 
