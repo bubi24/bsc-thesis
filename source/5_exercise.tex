@@ -42,7 +42,7 @@ A blokkok kiértékelése (hasonlóan \aref{section:dynamic_dependencies}. pontb
 
 \section{Jogosultságkezelés a JPortában}\label{subsection:permissions}
 
-A JPorta által használt Django keretrendszer beépítetten tartalmaz egy egyszerű jogosultság kezelő rendszert. Ez lehetővé teszi különböző jogosultságok hozzárendelését felhasználókhoz, vagy felhasználói csoportokhoz. Minden Django modellhez \cite{DjangoModel} tartozik alapértelmezés szerint három jogosultság, melyeket a keretrendszer automatikusan hoz létre. Ezek a létrehozás (add), módosítás (change) és törlés (delete) jogosultságok. Sok esetben már ezek is elegek lehetnek számunkra, de bármikor létrehozhatunk új jogosultságokat, melyekkel személyre szabottabban tudjuk kezelni a hozzáférést egy-egy funkcióhoz. Ezeknek köszönhetően alapvteően egyszerűen kezelhetjük a jogosultságok kérdését \cite{DjangoAuth}. Fontos megjegyezni, hoyg Django-ban a \textit{superuser}-nek jelölt felhasználók automatikusan rendelkeznek minden jogosultsággal.
+A JPorta által használt Django keretrendszer beépítetten tartalmaz egy egyszerű jogosultság kezelő rendszert. Ez lehetővé teszi különböző jogosultságok hozzárendelését felhasználókhoz, vagy felhasználói csoportokhoz. Minden Django modellhez \cite{DjangoModel} tartozik alapértelmezés szerint három jogosultság, melyeket a keretrendszer automatikusan hoz létre. Ezek a létrehozás (add), módosítás (change) és törlés (delete) jogosultságok. Sok esetben már ezek is elegek lehetnek számunkra, de bármikor létrehozhatunk új jogosultságokat, melyekkel személyre szabottabban tudjuk kezelni a hozzáférést egy-egy funkcióhoz. Ezeknek köszönhetően alapvetően egyszerűen kezelhetjük a jogosultságok kérdését \cite{DjangoAuth}. Fontos megjegyezni, hogy Django-ban a \textit{superuser}-nek jelölt felhasználók automatikusan rendelkeznek minden jogosultsággal.
 
 A JPorta ezen felül egyedi megoldást alkalmaz az egyes objektum példányok elérésének szabályozására, mely az access control list (ACL, \cite{ACL}) technikához hasonló. Az ACL minden objektumhoz rendel egy mátrixot, mely oszlopaiban a személyek (actor), soraiban pedig az egyes műveletek (action) találhatóak. Egy személy akkor hajthat végre egy műveletet, ha a mátrix általa és a művelet által meghatározott cellája igaz értéket tartalmaz.
 
@@ -92,11 +92,11 @@ Ezek a jogosultságok fedik le általánosságban a hozzáférések szabályozá
     \label{fig:exercise_perms}
 \end{figure}
 
-Végezetül a szerzői fájlok (ld. \aref{chapter:exercise}. fejezet) hozzáférését ellenőriztem. Itt van lehetőségünk a hallgatók elől elrejteni az adott fájlt, ugyanakkor ez csak a feladatbeadásnál való listázottságát módosítja csak. A fájlok webcím alapján közvetlenül továbbra is elérhetőek maradtak, így próbálgatással az összes titkosnak hitt szerzői fájl tartarlmát le lehetett kérdezni. Ennek megoldása egyszerűnek bizonyult, csak módosítani kellett a kérést kezelő függvényben a felhasználó és a visszaadandó fájl ellenőrzését. Eddig a fájl titkos voltától függetlenül visszaadásra került a tartalom.
+Végezetül a szerzői fájlok (ld. \aref{chapter:exercise}. fejezet) hozzáférését ellenőriztem. Itt van lehetőségünk a hallgatók elől elrejteni az adott fájlt, ugyanakkor ez csak a feladatbeadásnál való listázottságát módosítja csak. A fájlok webcím alapján közvetlenül továbbra is elérhetőek maradtak, így próbálgatással az összes titkosnak hitt szerzői fájl tartalmát le lehetett kérdezni. Ennek megoldása egyszerűnek bizonyult, csak módosítani kellett a kérést kezelő függvényben a felhasználó és a visszaadandó fájl ellenőrzését. Eddig a fájl titkos voltától függetlenül visszaadásra került a tartalom.
 
-\section{Kód lefedettség ellenőrzés}
+\section{Kódlefedettség ellenőrzés}
 
-A JPorta elődje révén felmerült az igény a C++ projektek esetében a kód lefedettség ellenőrzésére is. A rendszer bővíthető felépítettsége miatt a kiegészítés a meglévő blokkok és struktúrák lényeges módosítása nélkül lehetséges. Ennek implementálása az alábbi lépéseket foglalta magában:
+A JPorta elődje révén felmerült az igény a C++ projektek esetében a kódlefedettség ellenőrzésére is. A rendszer bővíthető felépítettsége miatt a kiegészítés a meglévő blokkok és struktúrák lényeges módosítása nélkül lehetséges. Ennek implementálása az alábbi lépéseket foglalta magában:
 
 \begin{enumerate}
     \item Különféle lefedettség ellenőrzők vizsgálata, a megfelelő kiválasztása.
@@ -106,7 +106,7 @@ A JPorta elődje révén felmerült az igény a C++ projektek esetében a kód l
     \item Felhasználó (hallgató) számára megjelenítés elkészítése.
 \end{enumerate}
 
-Megvizsgáltam különböző C++ programozási nyelvet támogató kód lefedettség ellenőrző eszközöket, melyek közül a \textit{gcov} program használata mellett döntötem. Ennek kimenete kiegészíti a forráskódot azzal, hogy mely sorai hányszor kerültek futtatásra. Minden sor elején szerepel, hogy hányszor futott le. Ezt egy kettőspont követi, majd a sor száma az eredeti forrásfájlt szerint, végül pedig a hozzá tartozó kód. Ha az adott sor nem futott le a tesztesetek során, akkor az elején szám helyett \textit{\#\#\#\#\#} vagy \textit{=====} szerepel. Ennek futtatásához szükséges egyfelől a fordításkor megfelelő kapcsoló átadása, illetve a fordításkor és futtattáskor keletkezett \textit{gcno} és \textit{gcda} fájlok továbbítása a \textit{gcov} számára. Tehát a keletkezett fájl formátuma az alábbihoz hasonló:
+Megvizsgáltam különböző C++ programozási nyelvet támogató kódlefedettség ellenőrző eszközöket, melyek közül a \textit{gcov} program használata mellett döntötem. Ennek kimenete kiegészíti a forráskódot azzal, hogy mely sorai hányszor kerültek futtatásra. Minden sor elején szerepel, hogy hányszor futott le. Ezt egy kettőspont követi, majd a sor száma az eredeti forrásfájlt szerint, végül pedig a hozzá tartozó kód. Ha az adott sor nem futott le a tesztesetek során, akkor az elején szám helyett \textit{\#\#\#\#\#} vagy \textit{=====} szerepel. Ennek futtatásához szükséges egyfelől a fordításkor megfelelő kapcsoló átadása, illetve a fordításkor és futtattáskor keletkezett \textit{gcno} és \textit{gcda} fájlok továbbítása a \textit{gcov} számára. Tehát a keletkezett fájl formátuma az alábbihoz hasonló:
 
 \begin{lstlisting}
     -:    1:#include <iostream>
@@ -128,7 +128,7 @@ Megvizsgáltam különböző C++ programozási nyelvet támogató kód lefedetts
 \end{lstlisting}
 
 Az elkészült blokk bemenetei a fordítási egységenként keletkezett \textit{gcno} és \textit{gcda} fájlok és a forrásfájlok. Beállítási lehetőségként szerepel a minimálisan elfogadott lefedettségi érték, mely alatt a beadás sikertelennek bizonyul. 
-Ezután elkészítettem a szükséges adminisztrátoi felületet a blokkhoz (ld. \ref{fig:jporta_codecov_block}. ábra). Ennek bal oldali oszlopában találhatóak a bemenetek bekötésére szolgáló vezérlők (melyek más blokkok kimenetei), középen a blokk tulajdonságainak beállítása, végül jobb oldalon a kimenet definiálása, mely más blokk bemenetére köthető.
+Ezután elkészítettem a szükséges adminisztrátori felületet a blokkhoz (ld. \ref{fig:jporta_codecov_block}. ábra). Ennek bal oldali oszlopában találhatóak a bemenetek bekötésére szolgáló vezérlők (melyek más blokkok kimenetei), középen a blokk tulajdonságainak beállítása, végül jobb oldalon a kimenet definiálása, mely más blokk bemenetére köthető.
     
 \begin{figure}[h]
     \centering

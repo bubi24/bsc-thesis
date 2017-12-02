@@ -97,10 +97,10 @@ Ez a rendszer az alapvető igényeket ugyan kielégíti, de hamar felmerült ké
 
 \begin{itemize}
     \item Dinamikus mezők kiszámítására nem használhatunk más dinamikus mezőket. 
-    \item Jelenleg nem lehet egy hallgatóra vagy kurzusra újraszámolni a dinamikus mezők értékeit, hanem mindig a tárgy összes hallgatójára újra kiértékelésre kerülnek ezek. Kezdetben ez nem tűnt nagy pazarlásnak, mivel 10-20 másodpercnél többet nem vesz igénybe a művelet egy 400 fős tárgy esetében \cite{KalmanMsc}, azonban felhasználva az előző pont miatt szükséges módosításokat, már sokkal közelebb kerülünk ennek a pontnak a megoldására is.
+    \item Jelenleg nem lehet egy hallgatóra vagy kurzusra újraszámolni a dinamikus mezők értékeit, hanem mindig a tárgy összes hallgatójára újra kiértékelésre kerülnek ezek. Kezdetben ez nem tűnt nagy pazarlásnak, mivel 10-20 másodpercnél többet nem vesz igénybe a művelet egy 400 fős tárgy esetében \cite{KalmanMsc}, azonban felhasználva az előző pont miatt szükséges módosításokat, már sokkal közelebb kerülünk ennek a pontnak a megoldásához is.
 \end{itemize}
 
-Az első hiányosság miatt, ha egy tárgy esetében szeretnénk, hogy a hallgatók láthassák külön a zártyhelyi dolgozataik átlagát, majd ezen érték és más mezők alapján egy másik mezőt is hozzá szeretnénk adni, akkor ezt csak kódduplikációval tehetjük meg. Azaz mindkét mezőnél meg kell adnunk ugyan azt a Python kód részletet, illetve a második mezőnél ezt még ki kell egészítenünk. Ez számos problémát felvet: a kód nem újrahasználható, módosítások hibalehetőséget rejtenek, illetve akár inkonzisztens értékeket is előállítatunk, ha a kódokat nem sikerül szinkronban tartani.
+Az első hiányosság miatt, ha egy tárgy esetében szeretnénk, hogy a hallgatók láthassák külön a zárthelyi dolgozataik átlagát, majd ezen érték és más mezők alapján egy másik mezőt is hozzá szeretnénk adni, akkor ezt csak kódduplikációval tehetjük meg. Azaz mindkét mezőnél meg kell adnunk ugyan azt a Python kód részletet, illetve a második mezőnél ezt még ki kell egészítenünk. Ez számos problémát felvet: a kód nem újrahasználható, módosítások hibalehetőséget rejtenek, illetve akár inkonzisztens értékeket is előállítatunk, ha a kódokat nem sikerül szinkronban tartani.
 
 A szakdolgozatom keretében erre a problémára is kerestem a megfelelő megoldást, melyet két kulcsfontosságú részre bontottam: függőségek meghatározása, majd ezek alapján a függőségi gráf kiértékelése.
 
@@ -141,7 +141,7 @@ Mivel a függőségek kialakításánál csak az irányított körmentesség a f
 
 Ezek értelmében pl. az $a, b, c, d, x$ kiértékelési sorrend megfelelő eredményt ad, mivel minden elem kiértékelésekor azok függőségeit már kiértékeltük és pontosan azokat a mezőket vettük bele a sorrendbe, amelyekre szükségünk van.
 
-A sorrend előállításához először felépítettem egy függőségi gráfot minden olyan elemből kiindulva, mely kurzushoz van rendelve. Minden így megtalált függőséget hozzáadtam a gárfhoz és rekurzívan megvizsgáltam az ahhoz tartozó függőségeket, ha az még nem létezett a gárfban. Ennek eredményeként előállt a függőségi gráf, mely pontosan a szükséges elemeket tartalmazta.
+A sorrend előállításához először felépítettem egy függőségi gráfot minden olyan elemből kiindulva, mely kurzushoz van rendelve. Minden így megtalált függőséget hozzáadtam a gráfhoz és rekurzívan megvizsgáltam az ahhoz tartozó függőségeket, ha az még nem létezett a gráfban. Ennek eredményeként előállt a függőségi gráf, mely pontosan a szükséges elemeket tartalmazta.
 
 Ez alapján a sorrend felállításához felhasználtam Dudás Ádám a JPorta más részein is használt ütezemőjét \cite{DudiMsc}. Ez a megoldás egy függőségi gráf alapján képes megtalálni egy megfelelő sorrendet, sőt a párhuzamosítási lehetőségeket is, de ez utóbbit nem használtam ki.
 
