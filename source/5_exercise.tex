@@ -165,8 +165,18 @@ Végül elkészítettem a hallgatói felületen látható grafikus megjeleníté
 
 % \section{Feladatok csoportosítása}
 
-\section{További lehetőségek}
+\section{Továbbfejlesztési lehetőségek}
 
 \subsection{Plágiumkeresés}
+
+A portálon beadott megoldásoknak csak akkor van a tanulás szempontjából vett értéke, ha azokat az adott hallgató meg nem engedett segédeszközök nélkül, önállóan oldotta meg. Internetes beadások lévén ennek teljeskörű ellenőrzése önmagában is nehezen vagy egyáltalán nem megoldható feladat. 
+
+Elégséges megoldásként célszerű lenne implementálni egy plágium\footnote{Plágium: ``szellemi tolvajlás, más művének közlése saját név alatt, a mű alapgondolatának vagy részleteinek felhasználása a szerzőre való hivatkozás nélkül'' (Magyar Értelmező Szótár)} ellenőrző blokkot. Itt a blokk bemenete lehet a beadáshoz tartozó forrásfájlok összessége, fő paramétere egy százalékos érték, melyet meghaladó hasonlóság esetén a beadást plágiumgyanúsnak jelöljük, kimenete pedig azon beadások halmaza, amelyekhez az adott forrásfájlok hasonlóságot mutattak.
+
+Írott szövegnél történő plagizálás felderítésénél is felmerül az átfogalmazás problémája. Azaz hogyan detektáljuk, ha a plagizáló nem szó szerint vett át adott részeket, hanem módosítva, de jelentésüket mégis megtartva. Programozási feladatok esetében is felmerül ez a probléma, hiszen sokféle olyan módosítást eszközölhetünk az eredeti forrásfájlon (annak részletes megértése nélkül), mely így látszólag már különbözik. Erre néhány példa lehet a változók, osztályok, struktúrák átnevezése, sorrendjük megváltoztatása, kommentek elhelyezése vagy törlése a kódból, stb.
+
+A plágium detektálást nehezítő faktorok miatt felmerül más szolgáltatások használata is erre a célra. Ilyen szolgáltatás többek között az amerikai Stanford egyetemen készült Moss (Measure Of Software Similarity, \cite{Moss}) szoftver is, mely képes a feltöltöt forráskódok között elvégezni az összehasonlítást. Jelenleg többek között támogatott programozási nyelvek a C, C++, Java, JavaScript, C\#, Python, így tehát az oktatásban használt nyelvek túlnyomó többsége.
+
+Másik problémaként felmerül, hogy a hallgatók nem csak egymás beadásaiból másolhatnak részeket, hanem az interneten keringő egyre több nyílt forráskódú program bármelyikéből. Ezek felismeréséhez számon további probléma megoldására lenne szükség.
 
 \subsection{Verziókezelő támogatás}
