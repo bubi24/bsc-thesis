@@ -15,16 +15,25 @@ A programozói ismeretek elsajátításához merőben más módszertanra van sz�
 
 Természetesen egy-egy ilyen szoftver elkészítésénél cél az előbbi előnyök legnagyobb mértékű teljesítése, illetve kiegészítése a lokálisan tapasztalt további igényekkel.
 
-\section*{Más automatikus kiértékelő rendszerek}\addcontentsline{toc}{section}{Más automatikus kiértékelő rendszerek}
+\section*{A szakdolgozat felépítése}\addcontentsline{toc}{section}{A szakdolgozat felépítése}
+A szakdolgozatom \ref{chapter:othersystems}. fejezetében bemutatom a JPorta rendszeréhez hasonló,  mindenki számára elérhető, nyílt forráskódú rendszereket. Majd \aref{chapter:jporta}. fejezetében ismertetem a JPorta felépítését és főbb funkcióit. Itt részletezem a nyújtott szolgáltatások elérését, a hallgatól által elérhető funkciók részleteit. Végül pedig kitérek a JPorta moduljainak kapcsolatára.
 
-\subsection*{Moodle}\addcontentsline{toc}{subsection}{Moodle}
+\aref{chapter:assessments}. fejezetben részletezem az értékelési rendszer funkcióit, kiemelve a dinamikus mezőket. Kitérek a dinamikus mezők jelenlegi implementációs részleteire, működésükre és tesztelhetőségükre. Ezután ismertetem a megoldásomat a dinamikus függőségek problémájának megoldására.
+
+\aref{chapter:exercise}. fejezetben az automatizált feladatkiértékelő modul kelül az előtérbe, részletezem annak működését. Kitérek a jogosultság kezelés problémájára, ezek felülvizsgálatára. Ezután a beadott megoldások kódlefedettség ellenőrzésére készített modult ismertetem, végül pedig a felmerülő további lehetőségeket.
+
+A szakdolgozatomat az elvégzett munka összefoglalásával zárom.
+
+\chapter{Más automatikus kiértékelő rendszerek}\label{chapter:othersystems}%\addcontentsline{toc}{section}{Más automatikus kiértékelő rendszerek}
+
+\section{Moodle}
 A Moodle \cite{Moodle} egy teljes körű eLearning rendszer, mely nyílt forráskódú GNU GPL \cite{GNUGPL} licenc alatt készült. A Moodle-nek mára több, mint 120 ezer felhasználója van, a világ 232 országában \cite{MoodleStats}, ami a nyílt forráskód előnyeivel kombinálva óriási potenciált jelent. 
 
 A Moodle általános lehetőséget biztosít az online oktatáshoz. Egyszerűen hozhatunk létre benne kurzusokat, melyekre a jelentkezést akár korlátozhatjuk is. A kurzusokon belül témakörökre bonthatjuk a tananyagot, melynek formája sokféle lehet: pdf fájlok, videók, külső weboldalak, stb. A résztvevők elsajátított tudásának ellenőrzése sem marad el: a Moodle általános rendszert biztosít online tesztek készítésére is, különféle jelleggel, mint pl. több válaszlehetőségből helyes(ek) kiválasztása, egy soros vagy éppen hosszabb saját szavas válaszok. A legtöbb fajta tesztnél lehetőségünk van a helyes válaszok megadására, így a portál azonnal ki is értékeli a beadást, ennek köszönhetően pedig a felhasználó azonnal értesül az elért eredményéről.
 
 Elterjedtségének köszönhetően számos közösségi fejlesztésű modul is készült hozzá, melyek közül találhatunk szép számmal a programozás oktatására fókuszálókat is. Ilyen például a Virtual Programming Lab \cite{VPL} \cite{VPLJournal}, mely támogat forráskódszerkesztést a böngészőben, programok futtatását, ellenőrzését és plágium ellenőrzést is. Mindezt a felhasználók a már megszokott Moodle környezetben érhetik el a kényelmes használat érdekében.
 
-\subsection*{edX, Open edX}\addcontentsline{toc}{subsection}{edX, Open edx}
+\section{edX, Open edX}
 Az edX \cite{EDXAbout} egy nonprofit online kezdeményezés, melynek alapítói a Harvard University és a Massachusetts Institute of Technology. Ennek segítségével egyetemi szintű kurzusokat tartanak világszerte közel 10 millió felhasználóval és több, mint ezer kurzussal \cite{EDXReview}.
 
 Az edX rendszer nem csak egyszerű tananyagok megtekintésére biztosít lehetőséget, de videókat és egyéb feladatokat is találunk a kínált kurzusokban. Emellett egyszerűen kapcsolatba léphetünk másokkal, akik a kurzusunkat hallgatják, ha éppen segítségre lenne szükségünk. A kurzusok többnyire ingyenesek, de sok esetben van lehetőségünk fizetés ellenében igazolást kapnunk a sikeresen elvégzett kurzusról.
@@ -33,6 +42,3 @@ A portálon lehetőségünk van programozással kapcsolatos kurzusok felvételé
 \footnotetext{A Codeboard (http://codeboard.io) egy böngésző alapú fejlesztő környezet a programozás oktatás segítésére. Támogatja az edX, moodle, cursera és egyéb platformokat.}
 
 Az Open edX egy nyílt forráskódú platform, melyet az edX fejlesztett ki és tett szabadon hozzáférhetővé saját oktatási környezetek létrehozására. Közel a teljes szerver oldali kód Python nyelven íródott, melynek széleskörű ismerttségének (és a rendszer nyílt forráskódú voltának) köszönhetően bárki kiegészítheti a meglévő kódot.
-
-\section*{A szakdolgozat felépítése}\addcontentsline{toc}{section}{A szakdolgozat felépítése}
-TODO
