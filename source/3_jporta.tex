@@ -65,5 +65,30 @@ A BME Irányítástechnika és Informatika Tanszékén 2009 és 2015 között ak
 
     A tárgy oktatói tudnak kurzusokat létrehozni, azokba hallgatókat felvenni. Emellett folyamatosan van lehetőségük új értékelések és automatikusan kiértékelődő feladatok hozzáadására. Ezek hozzáadása után a kurzusok oktatói fogják az eredményeket regisztrálni és a beadott feladatokat ellenőrizni, esetlegesen az automatikus értékelést felülbírálni.
 
-\section{Modulok felépítése}
-TODO
+\section{A rendszert felépítő modulok}
+
+A JPorta egy sok modulból álló komplex rendszer. A modulokat Django alkalmazások (application) reprezentálják. Ezek az alkalmazások a kódbázis elkülönített, de egymással kommunikáló részei, melyek rendelkezhetnek saját modellekkel, beállításokkal, nézetekkel és elérési paraméterekkel a nézetekhez. \cite{DjangoApp}
+
+A portál az alábbi alkalmazásokból épül fel:
+\begin{itemize}
+    \item acl: felelős az egyes objektum példányokhoz tartozó jogosultságok kezelésére. Részletesebben lásd \aref{subsection:permissions}. pontban.
+    \item assignment: felelős az automatikusan kiértékelődő feladatok hallgatókhoz rendeléséért.
+    \item course: félévek, tárgyak, kurzusok és kurzus csoportok kezeléséért, adminisztrálásáért felelős.
+    \item dashboard: tartalmazza az általános nézeteket, mint a belépő képernyőt és az eredmények oldalt.
+    \item exercise: automatikusan kiértékelődő feladatokat kezelő modul. Magában foglalja a felhasználható blokkokat, a feltöltött fájlokat, kezeli azok tárolását. Modelljeit \aref{fig:jporta_exercie_modules}. ábra szemlélteti. Részletesebben a szakdolgozatom \ref{chapter:exercise}. fejezetében fogom kifejteni.
+    \item grading: hallgatók értékeléséért felelős alkalmazás, részletesebben lásd \aref{chapter:assessments}. fejezetet.
+    \item graph: erőforrások felügyeletét könnyítő grafikonok megjelenítéséért felelős alkalmazás. Elérhető grafikon pl. memóriahasználatról, háttértár foglaltságáról, processzor terheléséről, stb.
+    \item lecture: előadásokon, laboratóriumi és gyakorlati foglalkozásokon való jelenlétek adminisztrálására szolgáló modul.
+    \item message: felhasználók közötti üzenetküldést megvalósító alkalmazás.
+    \item supervision: portálszintű adminisztrációs feladatok elvégzést lehetővé tévő modul. Ilyen feladat pl. a félévek létrehozása.
+    \item uprofile: alapértelmezett Django felhasználót kiegészítő modul.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \includegraphics[]{jporta_exercie_modules.png}
+    }
+    \caption{Exercise modul modelljei (részlet)}
+    \label{fig:jporta_exercie_modules}
+\end{figure}
