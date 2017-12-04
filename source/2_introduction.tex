@@ -24,7 +24,7 @@ A szakdolgozatom \ref{chapter:othersystems}. fejezetében bemutatom a JPorta ren
 
 A szakdolgozatomat az elvégzett munka összefoglalásával zárom.
 
-\chapter{Meglévő automatikus kiértékelő rendszerek}\label{chapter:othersystems}
+\chapter{Online automatikus kiértékelést támogató rendszerek}\label{chapter:othersystems}
 
 \section{Moodle}
 A Moodle \cite{Moodle} egy teljes körű eLearning rendszer, mely nyílt forráskódú GNU GPL \cite{GNUGPL} licenc alatt készült. A Moodle-nek mára több, mint 120 ezer felhasználója van, a világ 232 országában \cite{MoodleStats}, ami a nyílt forráskód előnyeivel kombinálva óriási potenciált jelent. 
@@ -51,3 +51,24 @@ A portálon lehetőségünk van programozással kapcsolatos kurzusok felvételé
 \footnotetext{A Codeboard (http://codeboard.io) egy böngésző alapú fejlesztő környezet a programozás oktatás segítésére. Támogatja az edX, moodle, cursera és egyéb platformokat.}
 
 Az Open edX egy nyílt forráskódú platform, melyet az edX fejlesztett ki és tett szabadon hozzáférhetővé saját oktatási környezetek létrehozására. Közel a teljes szerver oldali kód Python nyelven íródott, melynek széleskörű ismerttségének (és a rendszer nyílt forráskódú voltának) köszönhetően bárki kiegészítheti a meglévő kódot.
+
+\section{Codeacademy}
+
+A Codeacademy (\url{https://www.codecademy.com}) az előzőekhez haonlóan egy eLearning rendszer,mely felhasználói számára számos programnyelvhez kínál tanulási lehetőségeket, mint a Python, Java, PHP és JavaScript nyelvekhez. A weboldalon regisztráció után ingyenesen hozzáférhetünk a kurzusokhoz, de lehetőségünk van a Pro verziót is választani. Itt fizetés ellenében élő támogatást, tanulási egységenkénti ellenőrző kvízt és egyéb szolgáltatásokat kapunk. \cite{CodeacademyPro}
+
+A tanulás során pár perces feladatokat kapunk. Ezek megoldását a böngészőben található fejlesztői környezet támogatja, azaz a böngészőben meg tudjuk írni és kipróbálni a kódunkat, megfelelőségéről pedig másodperceken belül értesülünk, látva mely tesztesetek futtotak le sikeresen és melyeknél volt probléma, ld. \ref{fig:codeacademy}. ábra.
+
+\begin{figure}[h]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \includegraphics[]{codeacademy.png}
+    }
+    \caption[Codeacademy Python kurzus egyik feladata]{Codeacademy Python kurzus egyik feladata (forrás: \url{https://www.codecademy.com})}
+    \label{fig:codeacademy}
+\end{figure}
+
+Az előzőleg felsoroltakkal szemben a Codeacademy nem nyílt forráskódú rendszer, így saját igényekre szabni nem lehet.
+
+\section{Összefoglalás}
+
+A felsorolt nyílt forráskódú rendszerek egy általános megoldást biztosítanak az internetes oktatásra. Ennek következtében a programozás specifikus feladatok létrehozása körülményesebb, illetve kevésbé személyre szabott lehet a létező moduloktól függően. Ezen okok adják a JPorta létjogosultságát, mivel az egy programozás orientált szemléletű, de mégis általános megoldást próbál nyújtani a felmerülő igényekre, melyeket a tervezési fázisban az oktatókkal közösen határozták meg.
