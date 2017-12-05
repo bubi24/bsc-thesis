@@ -24,10 +24,14 @@ A szakdolgozatom \ref{chapter:othersystems}. fejezetében bemutatom a JPorta ren
 
 A szakdolgozatomat az elvégzett munka összefoglalásával zárom.
 
-\chapter{Online automatikus kiértékelést támogató rendszerek}\label{chapter:othersystems}
+\chapter{eLearning rendszerek}\label{chapter:othersystems}
+
+Az elmúlt években egyre hagsúlyosabbá vált az online oktatás annak előnyei miatt. Ennek eredményeképpen egyre több és több online kurzusokat biztosító és biztosítását lehetővé tévő weboldal jelent meg. \cite{eLearningPopularity}
+
+Ezen weboldalak jelentős része mint szolgáltatás működik, azaz kurzusokat (ingyeneseket és/vagy csak térítés ellenében elérhetőeket) biztosítanak, de sokszor nem, vagy csak korlátozottan biztosítanak lehetőséget arra, hogy saját tanfolyamot indítsunk. Más portálok nyílt forráskódúak, melynek köszönhetően személyre szabhatóak és saját szerveren futtathatóak. Ennek előnye, hogy a kurzusunk nem függ más rendszerektől és mindent saját kézben tarthatunk.
 
 \section{Moodle}
-A Moodle \cite{Moodle} egy teljes körű eLearning rendszer, mely nyílt forráskódú GNU GPL \cite{GNUGPL} licenc alatt készült. A Moodle-nek mára több, mint 120 ezer felhasználója van, a világ 232 országában \cite{MoodleStats}, ami a nyílt forráskód előnyeivel kombinálva óriási potenciált jelent. 
+A Moodle \cite{Moodle} egy teljes körű eLearning rendszer, mely nyílt forráskódú GNU GPL \cite{GNUGPL} licenc alatt készült. A Moodle-nek mára több, mint 120 ezer felhasználója van, a világ 232 országában \cite{MoodleStats}, amivel ez az egyik legnépszerűbb eLearning rendszer.
 
 A Moodle általános lehetőséget biztosít az online oktatáshoz. Egyszerűen hozhatunk létre benne kurzusokat, melyekre a jelentkezést akár korlátozhatjuk is. A kurzusokon belül témakörökre bonthatjuk a tananyagot, melynek formája sokféle lehet: pdf fájlok, videók, külső weboldalak, stb. A résztvevők elsajátított tudásának ellenőrzése sem marad el: a Moodle általános rendszert biztosít online tesztek készítésére is, különféle jelleggel, mint pl. több válaszlehetőségből helyes(ek) kiválasztása, egy soros vagy éppen hosszabb saját szavas válaszok. A legtöbb fajta tesztnél lehetőségünk van a helyes válaszok megadására, így a portál azonnal ki is értékeli a beadást, ennek köszönhetően pedig a felhasználó azonnal értesül az elért eredményéről.
 
@@ -42,6 +46,10 @@ A Moodle általános lehetőséget biztosít az online oktatáshoz. Egyszerűen 
 
 Elterjedtségének köszönhetően számos közösségi fejlesztésű modul is készült hozzá, melyek közül találhatunk szép számmal a programozás oktatására fókuszálókat is. Ilyen például a Virtual Programming Lab \cite{VPL} \cite{VPLJournal}, mely támogat forráskódszerkesztést a böngészőben, programok futtatását, ellenőrzését és plágium ellenőrzést is. Mindezt a felhasználók a már megszokott Moodle környezetben érhetik el a kényelmes használat érdekében.
 
+\section{ATutor}
+
+Az ATutor (\url{http://www.atutor.ca/}) a Moodle-höz hasonló nyílt forráskódú eLearning rendszer. A tanultak ellenőrzésére több típusból álló tesztsor automatikus kiértékelését is támogatja. Ilyen kérdés típusok lehetnek helyes válaszok kiválasztása, igaz-hamis kérdések, sorbarendezések, stb. Ugyanakkor nincs beépített programozás oktatást támogató modulja, aminek segítségével a felhasználó programozási feladatait tudná automatikus ellenőriztetni a rendszerrel.
+
 \section{edX, Open edX}
 Az edX \cite{EDXAbout} egy nonprofit online kezdeményezés, melynek alapítói a Harvard University és a Massachusetts Institute of Technology. Ennek segítségével egyetemi szintű kurzusokat tartanak világszerte közel 10 millió felhasználóval és több, mint ezer kurzussal \cite{EDXReview}.
 
@@ -54,7 +62,7 @@ Az Open edX egy nyílt forráskódú platform, melyet az edX fejlesztett ki és 
 
 \section{Codeacademy}
 
-A Codeacademy (\url{https://www.codecademy.com}) az előzőekhez hasonlóan egy eLearning rendszer, mely felhasználói számára számos programnyelvhez kínál tanulási lehetőségeket, mint a Python, Java, PHP és JavaScript nyelvek. A weboldalon regisztráció után ingyenesen hozzáférhetünk a kurzusokhoz, de lehetőségünk van a Pro verziót is választani. Itt fizetés ellenében élő támogatást, tanulási egységenkénti ellenőrző kvízt és egyéb szolgáltatásokat kapunk. \cite{CodeacademyPro}
+A Codeacademy (\url{https://www.codecademy.com}) az előzőekhez hasonlóan egy eLearning rendszer, amely felhasználói számára számos programnyelvhez kínál tanulási lehetőségeket, mint a Python, Java, PHP és JavaScript nyelvek. A weboldalon regisztráció után ingyenesen hozzáférhetünk a kurzusokhoz, de lehetőségünk van a Pro verziót is választani. Itt fizetés ellenében élő támogatást, tanulási egységenkénti ellenőrző kvízt és egyéb szolgáltatásokat kapunk. \cite{CodeacademyPro}
 
 A tanulás során pár perces feladatokat kapunk. Ezek megoldását a böngészőben található fejlesztői környezet támogatja, azaz a böngészőben meg tudjuk írni és kipróbálni a kódunkat, megfelelőségéről pedig másodperceken belül értesülünk, látva mely tesztesetek futtotak le sikeresen és melyeknél volt probléma, ld. \ref{fig:codeacademy}. ábra.
 
@@ -68,6 +76,18 @@ A tanulás során pár perces feladatokat kapunk. Ezek megoldását a böngész�
 \end{figure}
 
 Az előzőleg felsoroltakkal szemben a Codeacademy nem nyílt forráskódú rendszer, így saját igényekre szabni nem lehet.
+
+\section{Coursera}
+
+A Coursera (\url{https://www.coursera.org/}), hasonlón az előző pontban részletezett Codeacademy rendszeréhez, egy teljeskörű, nem nyílt forráskódú eLearning rendszer. Itt is lehetőségünk van ingyenesen is tanulni, azonban ez korlátozásokat rejt magában. Ezt választva számítanunk kell rá, hogy nem férünk hozzá a kurzus minden tartalmához, de a tananyagok jelentős részét így is megtekinthetjük.
+
+A Coursera a kurzusai megalkotásához együttműködik számos egyetemmel és egyéb szervezettel, melynek köszönhetően az oktatóanyagok magas színvonalúak. 2017. októberében a weboldal 2200 kurzusa volt elérhető a 28 millió regisztrált felhasználója számára.
+
+\section{Dokeos}
+
+A Dokeos (\url{https://www.dokeos.com}) az előzőekhez hasonló eLearning rendszer, melynek a Community Edition változata nyílt forráskódú. Ez a válozat több, mint 20 nyelven készült el a közösségi fejlesztés és fordítás eredményeképpen. Bárki szabadon használhatja, módosíthatja, testreszabhatja, futtathatja saját szervergépen, ezzel saját szolgáltatást indítva. A Dokeos eLearning Suite változata további szolgáltatásokat tartalmaz a Community Editon-höz képest, de ez már nem nyílt forráskódú. Ennek következtében ez csak a hivatalos oldalán érhető el fizetés ellenében.
+
+A talált információk és vélemények alapján a programozási feladatok magas fokú támogatottsága nem megoldott a rendszerben. Emellett a Moodle több szempontból is egy jobb rendszernek tűnik:  jobban skálázódik és szélesebb körű oktatási támogatással rendelkezik, melynek köszönhetően sokkalinkább megfelel az egyedi igényeknek. \cite{DokeosVsMoodle}
 
 \section{Összefoglalás}
 
