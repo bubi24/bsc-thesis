@@ -48,7 +48,7 @@ Elterjedtségének köszönhetően számos közösségi fejlesztésű modul is k
 
 \section{ATutor}
 
-Az ATutor (\url{http://www.atutor.ca/}) a Moodle-höz hasonló nyílt forráskódú eLearning rendszer. A tanultak ellenőrzésére több típusból álló tesztsor automatikus kiértékelését is támogatja. Ilyen kérdés típusok lehetnek helyes válaszok kiválasztása, igaz-hamis kérdések, sorbarendezések, stb. Ugyanakkor nincs beépített programozás oktatást támogató modulja, aminek segítségével a felhasználó programozási feladatait tudná automatikus ellenőriztetni a rendszerrel.
+Az ATutor (\url{\checkmark/}) a Moodle-höz hasonló nyílt forráskódú eLearning rendszer. A tanultak ellenőrzésére több típusból álló tesztsor automatikus kiértékelését is támogatja. Ilyen kérdés típusok lehetnek helyes válaszok kiválasztása, igaz-hamis kérdések, sorbarendezések, stb. Ugyanakkor nincs beépített programozás oktatást támogató modulja, aminek segítségével a felhasználó programozási feladatait tudná automatikus ellenőriztetni a rendszerrel.
 
 \section{edX, Open edX}
 Az edX \cite{EDXAbout} egy nonprofit online kezdeményezés, melynek alapítói a Harvard University és a Massachusetts Institute of Technology. Ennek segítségével egyetemi szintű kurzusokat tartanak világszerte közel 10 millió felhasználóval és több, mint ezer kurzussal \cite{EDXReview}.
@@ -91,4 +91,23 @@ A talált információk és vélemények alapján a programozási feladatok maga
 
 \section{Összefoglalás}
 
-A felsorolt nyílt forráskódú rendszerek egy általános megoldást biztosítanak az internetes oktatásra. Ennek következtében a programozás specifikus feladatok létrehozása körülményesebb, illetve kevésbé személyre szabott lehet a létező moduloktól függően. Ezen okok adják a JPorta létjogosultságát, mivel az egy programozás orientált szemléletű, de mégis általános megoldást próbál nyújtani a felmerülő igényekre, melyeket a tervezési fázisban az oktatókkal közösen határozták meg.
+A felsorolt nyílt forráskódú rendszerek egy általános megoldást biztosítanak az internetes oktatásra, összehasonlításukat \aref{table:elearning}. táblázat összegzi. Ennek következtében a programozás specifikus feladatok létrehozása körülményesebb, illetve kevésbé személyre szabott lehet a létező moduloktól függően. Ezen okok adják a JPorta létjogosultságát, mivel az egy programozás orientált szemléletű, de mégis általános megoldást próbál nyújtani a felmerülő igényekre, melyeket a tervezési fázisban az oktatókkal közösen határozták meg.
+
+\begin{table}[hp]
+    \begin{tabularx}{\textwidth}{X|c|c|c|c|c|c}
+                                            & Moodle     & ATutor     & edX        & Codeacademy & Coursera     & Dokeos \\\hline
+        Nyílt forráskód                     & \checkmark & \checkmark & \checkmark & X           & X            & \checkmark \\\hline
+        Kínált kurzusok                     & \checkmark & X          & \checkmark & \checkmark  & \checkmark   & X \\\hline
+        Egyedi kurzus                       & \checkmark & \checkmark & \checkmark & X           & X            & \checkmark \\\hline
+        Automatikusan ellenőrződő feladatok & \checkmark & \checkmark & \checkmark & \checkmark  & \checkmark   & \checkmark \\\hline
+        Egyéb beadandó feladatok            & \checkmark & \checkmark & \checkmark & \checkmark  & \checkmark   & \checkmark \\\hline
+        Programozási feladatok              & \checkmark & X          & \checkmark & \checkmark  & \checkmark   & X \\\hline
+        Dokumentum megosztás                & \checkmark & \checkmark & \checkmark & \checkmark  & \checkmark   & \checkmark \\\hline
+        Fórum támogatás                     & \checkmark & \checkmark & \checkmark & \checkmark  & \checkmark   & \checkmark \\\hline
+
+        Szerepkörök (felhasználó, oktató, stb.) 
+                                            & \checkmark & \checkmark & \checkmark & \checkmark  & \checkmark   & \checkmark \\\hline
+    \end{tabularx}
+    \caption{eLearning rendszerek összegzés}				
+    \label{table:elearning}
+\end{table}
